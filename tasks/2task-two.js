@@ -17,18 +17,20 @@
 
             try {  //using the try method which works specifically for the async/await function
                 const response = await fetch(url, { //i fetched the api link but in this case the url conatains the api link
-                    method: 'POST',
+                    method: 'POST',  //applying the POST method
                 });
 
-                if (response.ok) {
-                    requestStatus(true);
-                } else {
-                    requestStatus(false);
+                if (response.ok) {  //used the ok element and applied it to the response variable
+                    requestStatus(true); //called the first function with its conditional statement
+                } else {  //
+                    requestStatus(false); ////called the first function with its conditional statement
                 }
-            } catch (error) {
+            } catch (error) {  //catch the error
                 requestStatus(false);
             }
         }
-        postRequest();
+        postRequest();  //invoked the function
+
+        //BOOM!! 
  
 
