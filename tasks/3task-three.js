@@ -1,10 +1,12 @@
+// Make a GET request to any news URL your instructor will assign to you. Use pagination to display only 10 of the news feed for each click on the “next” button. Make the “previous” button to be invisible until you have a previous news feed to navigate back to.  Make the “next” button invisible when you've come to the end of the pagination.
+
 const url = "https://www.themealdb.com/api/json/v1/1/categories.php"; //assigned the api to url
 
 let previousBtn = document.getElementById("previousBtn");
 let nextBtn = document.getElementById("nextBtn");
 
 let currentPage = 1,
-    itemsPerPage = 3,
+    itemsPerPage = 2,
     categoriesData,
     categoriesDataLength;
 
@@ -15,7 +17,7 @@ async function getApi() {
     categoriesDataLength = categoriesData.length
 }
 
-async function itemsToShow() {
+async function displayItems() {
     await getApi()
 
     let food = document.getElementById("food");
@@ -23,45 +25,44 @@ async function itemsToShow() {
 
     let startIndex = (currentPage - 1) * itemsPerPage;
     let endIndex = startIndex + itemsPerPage;
-    let categoreiesToShow = categoriesData.slice(startIndex, endIndex);
+    let showcategories = categoriesData.slice(startIndex, endIndex);
 
-    categoreiesToShow.forEach((category) => {
+    showcategories .forEach((category) => {
         let elementId = document.createElement("p"),
             img = document.createElement("img"),
             title = document.createElement("h3"),
-            desc = document.createElement("p");
+            description = document.createElement("p");
 
-        elementId.textContent = category.idCategory;
+        elementId.innerText = category.idCategory;
         img.src = category.strCategoryThumb;
-        title.textContent = category.strCategory;
-        desc.textContent = category.strCategoryDescription;
+        title.innerText = category.strCategory;
+        description.innerText = category.strCategoryDescription;
 
         food.append(elementId);
         food.append(img);
         food.append(title);
-        food.append(desc);
+        food.append(description);
     })
-    hideBtns();
 }
+displayItems();
 
-itemsToShow();
 
 
 nextBtn.addEventListener("click", () => {
     currentPage++;
-    itemsToShow();
+    displayItems();
 });
 
-prevBtn.addEventListener("click", () => {
+previousBtn.addEventListener("click", () => {
     currentPage--;
-    itemsToShow();
+    displayItems();
 });
 
 function hideBtns() {
     if (currentPage === 1) {
-        prevBtn.style.display = "none";
+        previousBtn.style.display = "none";
     } else {
-        prevBtn.style.display = "inline-block";
+        previousBtn.style.display = "inline-block";
     }
     let totalNumberOfPages = Math.ceil(categoriesDataLength / itemsPerPage);
 
@@ -69,5 +70,6 @@ function hideBtns() {
         nextBtn.style.display = "none";
     } else {
         nextBtn.style.display = "initial";
+    }
 }
-}
+// hideBtns(); 
