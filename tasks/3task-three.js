@@ -1,49 +1,73 @@
-// // // function myname = (array,object){
-// // //     object.name = {age:[...array]}
-// // // }
-// // // myname()
-// // // console.log(myname);
-// // let myObj = {
-// //     name: "list of things to buy",
-// //     list: ["groceries", "vegetables", "berries"],
-// //     cost: 3900
-// //     }
+const url = "https://www.themealdb.com/api/json/v1/1/categories.php";
 
-// //     let {name, ...rest} = myObj
-// //     //the name with comma stands for the first index, and the rest of the properties are spread into the rest
-// //     console.log(rest); //output will be { list: [ 'groceries', 'vegetables', 'berries' ], cost: 3900 }
+let previousBtn = document.getElementById("prevBtn");
+let nextBtn = document.getElementById("nextBtn");
 
-//     let myArr = [
-//         {name: 'list of things'},
-//         [{
-//             type: 'groceries',
-//             cost: 3900,
-//             isAvailable: true,
-//             alternatives: ['beans', 'oil'],
-//         }]
-//     ]
+let currentPage = 1,
+    itemsPerPage = 3,
+    categoriesData,
+    categoriesDataLength;
 
-//     let [,[{alternatives: [, kill]}]]= myArr
-    
-//     console.log(kill);
-    let apiArray = []
-    async function getApi () {
-        const res = await fetch(url)
-        const data = await res.json()
-        apiArray.push(data)
+async function fetchApi() {
+    const response = await fetch(api);
+    const data = await response.json();
+    categoriesData = data.categories;
+    categoriesDataLength = categoriesData.length
+}
+
+async function itemsToShow() {
+    await fetchApi()
+
+    let food = document.getElementById("food");
+    food.innerHTML = "";
+
+    let startIndex = (currentPage - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    let categoreiesToShow = categoriesData.slice(startIndex, endIndex);
+
+    categoreiesToShow.forEach((category) => {
+        let elementId = document.createElement("p"),
+            img = document.createElement("img"),
+            title = document.createElement("h3"),
+            desc = document.createElement("p");
+
+        elementId.textContent = category.idCategory;
+        img.src = category.strCategoryThumb;
+        title.textContent = category.strCategory;
+        desc.textContent = category.strCategoryDescription;
+
+        food.append(elementId);
+        food.append(img);
+        food.append(title);
+        food.append(desc);
+    })
+    hideBtns();
+}
+
+itemsToShow();
+
+
+nextBtn.addEventListener("click", () => {
+    currentPage++;
+    itemsToShow();
+});
+
+prevBtn.addEventListener("click", () => {
+    currentPage--;
+    itemsToShow();
+});
+
+function hideBtns() {
+    if (currentPage === 1) {
+        prevBtn.style.display = "none";
+    } else {
+        prevBtn.style.display = "inline-block";
     }
+    let totalNumberOfPages = Math.ceil(categoriesDataLength / itemsPerPage);
 
-    let myBook = {
-        title: 'things fall apart',
-        author: "kenpachi",
-
-    } // an object 
-
-    function displayBooks ({title, author}) { //adding the properties of mybook and destructuting in the displaBooks function
-        let parag1 = document.getElementsByTagName('p')[0]
-        let parag2 = document.getElementsByTagName('p')[1]
-        parag1.innerText = title  
-        parag2.innerText = author //modified the text of parag2
-    }
-    displayBooks(apiArray)
-   
+    if (currentPage === totalNumberOfPages) {
+        nextBtn.style.display = "none";
+    } else {
+        nextBtn.style.display = "initial";
+}
+}

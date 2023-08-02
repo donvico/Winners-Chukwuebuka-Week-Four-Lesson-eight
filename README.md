@@ -17,7 +17,6 @@
 - Mr Tony Dilibe
 * Mrs Ngozi
 * Mr Ekene
-* Mr Johnson Promise (JP)
 * Mr Patrick 
 * Mr Okechukwu Promise
  

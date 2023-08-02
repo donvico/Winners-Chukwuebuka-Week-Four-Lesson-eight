@@ -10,6 +10,7 @@ parentResponse.style.display = 'flex'; //played around the dom styling
 parentResponse.style.justifyContent = 'center'; //justified it to the center
 parentResponse.style.fontSize = '50px'; // changed the font size
 parentResponse.style.color = 'green' //and the text color to green
+
 })
 .catch( error => {  //applied the catch for error request
     parentResponse.innerText = '“Request failed, check internet connectivity."'; //changed the innertext 
@@ -17,5 +18,6 @@ parentResponse.style.color = 'green' //and the text color to green
     parentResponse.style.fontSize = '50px' //changed the font size to 50
     
 })
+
 
 
