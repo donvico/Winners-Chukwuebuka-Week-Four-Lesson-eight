@@ -1,6 +1,6 @@
-const url = "https://www.themealdb.com/api/json/v1/1/categories.php";
+const url = "https://www.themealdb.com/api/json/v1/1/categories.php"; //assigned the api to url
 
-let previousBtn = document.getElementById("prevBtn");
+let previousBtn = document.getElementById("previousBtn");
 let nextBtn = document.getElementById("nextBtn");
 
 let currentPage = 1,
@@ -8,15 +8,15 @@ let currentPage = 1,
     categoriesData,
     categoriesDataLength;
 
-async function fetchApi() {
-    const response = await fetch(api);
+async function getApi() {
+    const response = await fetch(url);
     const data = await response.json();
     categoriesData = data.categories;
     categoriesDataLength = categoriesData.length
 }
 
 async function itemsToShow() {
-    await fetchApi()
+    await getApi()
 
     let food = document.getElementById("food");
     food.innerHTML = "";
